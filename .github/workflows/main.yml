@@ -2,14 +2,21 @@ name: reproduce
 on: workflow_dispatch
 jobs:
   ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
         run: sh reproduce.sh
-  macos:
-    runs-on: macos-latest
+  macos-intel:
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: sh reproduce.sh
+  macos-arm:
+    runs-on: macos-14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
