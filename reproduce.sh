@@ -1,9 +1,13 @@
 # print system information
+if test `uname -s` = 'Linux'; then
 uname -a
 ulimit -a
 env
 free
 lscpu
+elif test `uname -s` = 'Darwin'; then
+sysctl -a
+fi
 # set variables
 export DIAG_TRACE=1
 export DIAG_POST_LEVEL=Trace
