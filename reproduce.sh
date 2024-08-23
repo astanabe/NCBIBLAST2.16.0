@@ -63,16 +63,16 @@ The '$n'-th loop started
 '
 # run blastn 2.15.0+ (DB:testsuperset, Single thread) No problem
 echo 'ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1'
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1 || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
 # run blastn 2.15.0+ (DB:testsuperset, Multi-thread) No problem
 echo 'ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads $NCPU || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
 # run blastn 2.15.0+ (DB:testsubset, Single thread) No problem
 echo 'ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1'
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1 || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
 # run blastn 2.15.0+ (DB:testsubset, Multi-thread) No problem
 echo 'ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads $NCPU || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
 # output message
 echo '
 Test passed in '$n'-th loop
@@ -88,16 +88,16 @@ The '$n'-th loop started
 '
 # run blastn 2.16.0+ (DB:testsuperset, Single thread) No problem
 echo 'ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1'
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1 || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
 # run blastn 2.16.0+ (DB:testsuperset, Multi-thread) No problem
 echo 'ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads $NCPU || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
 # run blastn 2.16.0+ (DB:testsubset, Single thread) No problem
 echo 'ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1'
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1 || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
 # run blastn 2.16.0+ (DB:testsubset, Multi-thread) Sometimes hangs up (but not always)
 echo 'ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
-perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads $NCPU || exit $?
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
 # output message
 echo '
 Test passed in '$n'-th loop
