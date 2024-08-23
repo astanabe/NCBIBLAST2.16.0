@@ -1,3 +1,6 @@
+# set variables
+export DIAG_TRACE=1
+export DIAG_POST_LEVEL=Trace
 # make directory
 mkdir reproduce
 # change current directory
