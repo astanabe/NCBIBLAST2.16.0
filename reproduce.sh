@@ -5,23 +5,23 @@ cd reproduce
 # download executable binary
 if test `uname -s` = 'Linux'; then
 NCPU=`grep -c processor /proc/cpuinfo`
-wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-linux.tar.gz
-wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-linux.tar.gz
+wget -nv -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-linux.tar.gz
+wget -nv -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-linux.tar.gz
 elif test `uname -s` = 'Darwin'; then
 NCPU=`sysctl -n hw.logicalcpu_max`
-curl -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz
-curl -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz
+curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz
+curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz
 if test `uname -m` = 'arm64'; then
 softwareupdate --install-rosetta
 fi
 fi
 # download BLAST databases
 if test `uname -s` = 'Linux'; then
-wget -c https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
-wget -c https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
+wget -nv -c https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
+wget -nv -c https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
 elif test `uname -s` = 'Darwin'; then
-curl -O -C - https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
-curl -O -C - https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
+curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
+curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
 fi
 # extract
 ls *.tar.gz | xargs -P 4 -L 1 tar -xzf
