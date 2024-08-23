@@ -12,7 +12,8 @@ NCPU=`sysctl -n hw.logicalcpu_max`
 curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz
 curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz
 if test `uname -m` = 'arm64'; then
-softwareupdate --install-rosetta
+echo 'A' > A.txt
+softwareupdate --install-rosetta < A.txt
 fi
 fi
 # download BLAST databases
