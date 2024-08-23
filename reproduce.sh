@@ -69,7 +69,7 @@ TTCCGGGGGGAGTATGGTTGCAAAGCTGAAACTTAAAGGAATTGACGGAAGGGCACCACCAGGAGTGGAG
 CCTGCGGCTTAATTTGACTCAACACGGGAAACCTCACCCGGCCCGGACACGGACAGGATTGACAGATTGA
 TAGCTCTTTCTCGATTCCGTGGGTGGTGGTGCATGGCCGTTCTTAGTTGGTGGAGCGATTTGTCTGGTTA' > query.fasta
 
-# test 10 times using blastn 2.15.0+
+# test 30 times using blastn 2.15.0+
 for n in `seq 1 30`
 do echo '
 The '$n'-th loop started
@@ -92,7 +92,7 @@ Test passed in '$n'-th loop
 '
 done
 
-# test 10 times using blastn 2.16.0+
+# test 30 times using blastn 2.16.0+
 for n in `seq 1 30`
 do echo '
 The '$n'-th loop started
