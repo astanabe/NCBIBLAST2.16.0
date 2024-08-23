@@ -1,3 +1,9 @@
+# print system information
+uname -a
+ulimit -a
+env
+free
+lscpu
 # set variables
 export DIAG_TRACE=1
 export DIAG_POST_LEVEL=Trace
