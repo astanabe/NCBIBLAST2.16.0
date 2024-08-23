@@ -1,0 +1,10 @@
+name: reproduce
+on: workflow_dispatch
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: sh reproduce.sh
