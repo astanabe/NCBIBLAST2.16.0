@@ -18,12 +18,14 @@ cd reproduce
 # download executable binary
 if test `uname -s` = 'Linux'; then
 NCPU=`grep -c processor /proc/cpuinfo`
-wget -nv -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-linux.tar.gz
-wget -nv -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-linux.tar.gz
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-linux.tar.gz
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-linux.tar.gz
+wget -c https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-x64-linux.tar.gz
 elif test `uname -s` = 'Darwin'; then
 NCPU=`sysctl -n hw.logicalcpu_max`
-curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz
-curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz
+curl -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.15.0/ncbi-blast-2.15.0+-x64-macosx.tar.gz
+curl -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.16.0/ncbi-blast-2.16.0+-x64-macosx.tar.gz
+curl -O -C - https://ftp.ncbi.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-x64-macosx.tar.gz
 if test `uname -m` = 'arm64'; then
 echo 'A' > A.txt
 softwareupdate --install-rosetta < A.txt
@@ -31,11 +33,11 @@ fi
 fi
 # download BLAST databases
 if test `uname -s` = 'Linux'; then
-wget -nv -c https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
-wget -nv -c https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
+wget -c https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
+wget -c https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
 elif test `uname -s` = 'Darwin'; then
-curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
-curl -sS -O -C - https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
+curl -O -C - https://ftp.ncbi.nih.gov/blast/db/LSU_eukaryote_rRNA.tar.gz
+curl -O -C - https://ftp.ncbi.nih.gov/blast/db/SSU_eukaryote_rRNA.tar.gz
 fi
 # extract
 ls *.tar.gz | xargs -P 4 -L 1 tar -xzf
@@ -69,8 +71,8 @@ TTCCGGGGGGAGTATGGTTGCAAAGCTGAAACTTAAAGGAATTGACGGAAGGGCACCACCAGGAGTGGAG
 CCTGCGGCTTAATTTGACTCAACACGGGAAACCTCACCCGGCCCGGACACGGACAGGATTGACAGATTGA
 TAGCTCTTTCTCGATTCCGTGGGTGGTGGTGCATGGCCGTTCTTAGTTGGTGGAGCGATTTGTCTGGTTA' > query.fasta
 
-# test 30 times using blastn 2.15.0+
-for n in `seq 1 30`
+# test 10 times using blastn 2.15.0+
+for n in `seq 1 10`
 do echo '
 The '$n'-th loop started
 '
@@ -90,10 +92,12 @@ perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.15.0+/bin/blastn -db ./testsub
 echo '
 Test passed in '$n'-th loop
 '
+# sleep
+sleep 5
 done
 
-# test 30 times using blastn 2.16.0+
-for n in `seq 1 30`
+# test 10 times using blastn 2.16.0+
+for n in `seq 1 10`
 do echo '
 The '$n'-th loop started
 '
@@ -113,4 +117,31 @@ perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.16.0+/bin/blastn -db ./testsub
 echo '
 Test passed in '$n'-th loop
 '
+# sleep
+sleep 5
+done
+
+# test 10 times using blastn 2.17.0+
+for n in `seq 1 10`
+do echo '
+The '$n'-th loop started
+'
+# run blastn 2.17.0+ (DB:testsuperset, Single thread) No problem
+echo 'ncbi-blast-2.17.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1'
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.17.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
+# run blastn 2.17.0+ (DB:testsuperset, Multi-thread) No problem
+echo 'ncbi-blast-2.17.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.17.0+/bin/blastn -db ./testsuperset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
+# run blastn 2.17.0+ (DB:testsubset, Single thread) No problem
+echo 'ncbi-blast-2.17.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1'
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.17.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads 1 > $n.log || exit $?
+# run blastn 2.17.0+ (DB:testsubset, Multi-thread) Sometimes hangs up (but not always)
+echo 'ncbi-blast-2.17.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads '$NCPU
+perl -e 'alarm shift; exec @ARGV' 30 ncbi-blast-2.17.0+/bin/blastn -db ./testsubset -query query.fasta -out - -evalue 1 -num_threads $NCPU > $n.log || exit $?
+# output message
+echo '
+Test passed in '$n'-th loop
+'
+# sleep
+sleep 5
 done
