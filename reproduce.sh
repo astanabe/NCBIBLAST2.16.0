@@ -97,7 +97,7 @@ sleep 5
 done
 
 # test 10 times using blastn 2.17.0+
-for n in `seq 1 30`
+for n in `seq 1 50`
 do echo '
 The '$n'-th loop started
 '
@@ -122,7 +122,7 @@ sleep 5
 done
 
 # test 10 times using blastn 2.16.0+
-for n in `seq 1 30`
+for n in `seq 1 2`
 do echo '
 The '$n'-th loop started
 '
